@@ -17,9 +17,9 @@
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
-Route::delete('/home/{id}', 'HomeController@destroy')->name('destroy');
+Route::delete('/home/{id}', 'HomeController@destroy')->name('destroy')->middleware('auth');
 
 Route::resource('/question', 'QuestionsController');
 

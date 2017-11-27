@@ -53,8 +53,8 @@
   <script type="text/javascript">
   $( document ).ready(function() {
     $("#year").datetimepicker({
-      // datepicker: false,
-      // format:'Y'
+      timepicker: false,
+      format:''
     });
   });
 

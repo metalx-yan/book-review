@@ -20,10 +20,16 @@
           @foreach ($root as $roots)
             <div class="panel panel-default">
             <div class="panel-body">
-            <h3>{{ $roots->title }}</h3>
-            <small>{{ $roots->user->name." <".$roots->user->email.">"  }}</small>
-            <hr>
-            <h4>{{ $roots->description }}
+              <div class="col-md-6">
+                <h3>{{ $roots->title }}</h3>
+                <small>{{ $roots->user->name." <".$roots->user->email.">"  }}</small>
+                <div class="thumbnail">
+                  <img src="{{asset('image/'.$roots->books->cover)}}" alt="{{ $roots->books->title }}">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h4>{{ $roots->description }}
+              </div>
             </h4>
 
           </div>

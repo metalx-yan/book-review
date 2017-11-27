@@ -78,7 +78,7 @@ class QuestionsController extends Controller
           $image = $request->file('image_upload');
           $filename = time() . '.' . $image->getClientOriginalExtension();
           $location = public_path('image/' . $filename);
-          Image::make($image)->resize(800,400)->save($location);
+          Image::make($image)->resize(300,300)->save($location);
 
           $ques->books()->create([
           'title' => $request->titlebook,
@@ -103,8 +103,7 @@ class QuestionsController extends Controller
     public function show($id)
     {
         $question = Question::where('slug', '=', $id)->first();
-        $book = Book::find($id);
-
+        $book = $question->books;
         return view('question.show', compact('question', 'book'));
     }
 
@@ -117,7 +116,7 @@ class QuestionsController extends Controller
     public function edit($id)
     {
         $question = Question::where('slug', '=', $id)->first();
-        $book = Book::find($id);
+        $book = $question->books;
 
         return view('question.edit', compact('question', 'book'));
     }
@@ -141,7 +140,7 @@ class QuestionsController extends Controller
       $create->slug = str_slug($request->title);
       $create->description = $request->description;
 
-      $update = Book::find($id);
+      $update = $create->books;
       $update->update([
         'title' => $request->titlebook,
         'writer' => $request->writer,
