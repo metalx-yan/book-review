@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::delete('/home/{id}', 'HomeController@destroy')->name('destroy');
+
+Route::resource('/question', 'QuestionsController');
+
+Route::get('/', 'HomeController@root')->name('sites.root');

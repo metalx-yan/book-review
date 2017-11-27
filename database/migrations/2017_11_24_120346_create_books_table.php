@@ -18,10 +18,16 @@ class CreateBooksTable extends Migration
             $table->string('title');
             $table->string('writer');
             $table->integer('year');
-            $table->string('cover');
             $table->string('publisher');
             $table->timestamps();
         });
+
+        Schema::table('books', function (Blueprint $table) {
+          $table->unsignedInteger('question_id');
+          $table->foreign('question_id')->references('id')->on('questions');
+        });
+
+
     }
 
     /**

@@ -1,0 +1,24 @@
+.judul {
+  color: grey;
+}
+
+.judul:hover{
+  color: grey;
+}
+
+.glip {
+  margin-right: 80px;
+}
+
+.pen {
+  margin-top: 7px;
+  margin-left: -50px;
+}
+
+.trash {
+  font-size: 20px;
+}
+
+.pencil {
+  font-size: 20px;
+}

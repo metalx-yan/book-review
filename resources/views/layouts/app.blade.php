@@ -10,8 +10,14 @@
 
     <title>Book Review</title>
 
+    @yield('style')
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('css/jquery.datetimepicker.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -48,7 +54,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->full_name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu">
@@ -74,7 +80,13 @@
         @yield('content')
     </div>
 
-    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/jquery.datetimepicker.full.js') }}"></script>
+    <script src="{{ asset('js/jquery.datetimepicker.full.min.js') }}"></script>
+
+    @yield('script')
+
+
 </body>
 </html>

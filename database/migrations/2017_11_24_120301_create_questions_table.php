@@ -20,6 +20,11 @@ class CreateQuestionsTable extends Migration
             $table->text('description');
             $table->timestamps();
         });
+
+        Schema::table('questions', function (Blueprint $table) {
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+        });
     }
 
     /**
