@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $index = Question::orderBy('id','desc')->paginate(2);
+        $index = Question::orderBy('id','desc')->paginate(7);
         return view('home', compact('index'));
     }
 

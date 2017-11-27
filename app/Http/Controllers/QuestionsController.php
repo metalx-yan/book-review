@@ -7,6 +7,7 @@ use App\Question;
 use App\Book;
 use Image;
 use Auth;
+use File;
 
 class QuestionsController extends Controller
 {
@@ -46,34 +47,22 @@ class QuestionsController extends Controller
     {
         // dd($request);
         $this->validate($request, [
-          'title' => 'required'
+          'title' => 'required',
+          'description' => 'required',
+          'titlebook' => 'required',
+          'writer' => 'required',
+          'year' => 'required',
+          'publisher' => 'required',
+          'image_upload' => 'required',
         ]);
+
+        $next = Question::where('slug', '=', str_slug($request->title))->first();
 
         $create = Auth::user()->questions()->create([
           'title' => $request->title,
-          'slug' => str_slug($request->title),
+          'slug' => str_random(),
           'description' => $request->description,
         ]);
-
-          $ques = Question::where('slug', '=', str_slug($request->title))->first();
-
-          $ques->books()->create([
-          'title' => $request->titlebook,
-          'writer' => $request->writer,
-          'year' => $request->year,
-          'publisher' => $request->publisher,
-        ]);
-
-        if ($request->hasFile('image_upload')) {
-          $image = $request->file('image_upload');
-          $filename = time() . '.' . $image->getClientOriginalExtension();
-          $location = public_path('image/' . $filename);
-          Image::make($image)->resize(800,400)->save($location);
-
-          $ques->cover = $filename;
-        }
-
-        $next = Question::where('slug', '=', str_slug($create->slug))->first();
 
         if (isset($next)) {
           $create->slug = str_slug("$create->id $create->title");
@@ -82,6 +71,23 @@ class QuestionsController extends Controller
         }
 
         $create->save();
+
+        $ques = Question::where('slug', '=', $create->slug)->first();
+
+        if ($request->hasFile('image_upload')) {
+          $image = $request->file('image_upload');
+          $filename = time() . '.' . $image->getClientOriginalExtension();
+          $location = public_path('image/' . $filename);
+          Image::make($image)->resize(800,400)->save($location);
+
+          $ques->books()->create([
+          'title' => $request->titlebook,
+          'writer' => $request->writer,
+          'year' => $request->year,
+          'publisher' => $request->publisher,
+          'cover' => $filename
+          ]);
+        }
 
         return redirect()->route('question.index');
 
@@ -176,7 +182,8 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
-        $destroy = Question::where('slug', '=', $id)->first();
+      $destroy = Question::where('slug', '=', $id)->first();
+        File::delete('image/'.$destroy->books->cover);
         $destroy->delete();
 
         return redirect()->back();

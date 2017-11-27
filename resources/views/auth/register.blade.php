@@ -27,16 +27,6 @@
         <form class="form-horizontal" method="POST" action="{{ route('register') }}">
             {{ csrf_field() }}
 
-            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus placeholder="Nama">
-
-                    @if ($errors->has('name'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('name') }}</strong>
-                        </span>
-                    @endif
-            </div>
-
             <div class="form-group{{ $errors->has('full_name') ? ' has-error' : '' }}">
                     <input id="name" type="text" class="form-control" name="full_name" value="{{ old('full_name') }}" required autofocus placeholder="Full Name">
 

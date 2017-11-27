@@ -24,10 +24,11 @@
 
           <!-- List group -->
           <ul class="list-group">
-            <li class="list-group-item">Title Book : {{ $book->title }}</li>
-            <li class="list-group-item">Title Writer : {{ $book->writer }}</li>
-            <li class="list-group-item">Title Year : {{ $book->year }}</li>
-            <li class="list-group-item">Title Publisher : {{ $book->publisher }}</li>
+            <li class="list-group-item">Title : {{ $book->title }}</li>
+            <li class="list-group-item">Writer : {{ $book->writer }}</li>
+            <li class="list-group-item">Year : {{ $book->year }}</li>
+            <li class="list-group-item">Publisher : {{ $book->publisher }}</li>
+            <li class="list-group-item">Full Image : <a href="{{ url('/image').'/'.$book->cover }}">Image</a></li>
 
           </ul>
         </div>
