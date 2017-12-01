@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Question;
-use App\Book;
 use Image;
 use Auth;
 use File;
@@ -91,7 +90,6 @@ class QuestionsController extends Controller
 
         return redirect()->route('question.index');
 
-
     }
 
     /**
@@ -137,7 +135,7 @@ class QuestionsController extends Controller
       $create = Question::where('slug', '=', $id)->first();
 
       $create->title = $request->title;
-      $create->slug = str_slug($request->title);
+      $create->slug = str_random();
       $create->description = $request->description;
 
       $update = $create->books;
@@ -181,7 +179,7 @@ class QuestionsController extends Controller
      */
     public function destroy($id)
     {
-      $destroy = Question::where('slug', '=', $id)->first();
+        $destroy = Question::where('slug', '=', $id)->first();
         File::delete('image/'.$destroy->books->cover);
         $destroy->delete();
 

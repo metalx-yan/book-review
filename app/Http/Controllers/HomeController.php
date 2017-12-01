@@ -24,6 +24,13 @@ class HomeController extends Controller
         return view('home', compact('index'));
     }
 
+    public function q($id)
+    {
+      $question = Question::where('slug', '=', $id)->first();
+      $book = $question->books;
+      return view('q', compact('question', 'book'));
+    }
+
     public function root()
     {
         $root = Question::all();

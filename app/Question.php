@@ -19,4 +19,9 @@ class Question extends Model
     {
         return $this->hasOne(Book::class);
     }
+
+    public function answers()
+    {
+      return $this->hasMany(Answer::class);
+    }
 }
