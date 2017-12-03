@@ -180,6 +180,7 @@ class QuestionsController extends Controller
     public function destroy($id)
     {
         $destroy = Question::where('slug', '=', $id)->first();
+        // dd($destroy);
         File::delete('image/'.$destroy->books->cover);
         $destroy->delete();
 

@@ -30,6 +30,7 @@
 
               <div class="col-md-6">
                 <h3>{{ $roots->description }}</h3>
+                {{-- <input type="text" name="" class="form-control" value="" placeholder="Komentar"> --}}
               </div>
 
           </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Answer;
+use Auth;
 
 class AnswerController extends Controller
 {
@@ -13,7 +15,7 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -23,7 +25,7 @@ class AnswerController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -34,7 +36,20 @@ class AnswerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+          'message' => 'required',
+        ]);
+        // dd($request);
+        $a = new Answer;
+        $a->question_id = $request->question_id;
+        $a->user_id = Auth::user()->id;
+        $a->id = $request->id;
+        $a->message = $request->message;
+        $a->save();
+
+
+        return redirect()->back();
+
     }
 
     /**
@@ -79,6 +94,9 @@ class AnswerController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $destroy = Answer::find($id);
+      $destroy->delete();
+
+      return redirect()->back();
     }
 }
