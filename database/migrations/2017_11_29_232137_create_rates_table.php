@@ -24,7 +24,7 @@ class CreateRatesTable extends Migration
             $table->unsignedInteger('answer_id');
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('answer_id')->references('id')->on('answers');
+            $table->foreign('answer_id')->references('id')->on('answers')->onDelete('cascade');
         });
     }
 

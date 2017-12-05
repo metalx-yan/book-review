@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Answer;
+use App\Rate;
 use Auth;
 
 class AnswerController extends Controller
@@ -39,7 +40,6 @@ class AnswerController extends Controller
         $this->validate($request, [
           'message' => 'required',
         ]);
-        // dd($request);
         $a = new Answer;
         $a->question_id = $request->question_id;
         $a->user_id = Auth::user()->id;
@@ -52,6 +52,67 @@ class AnswerController extends Controller
 
     }
 
+    public function rate(Request $req)
+    {
+
+      // dd($req);
+      $rate = new Rate;
+      $rate->type = 1;
+      $rate->user_id = Auth::user()->id;
+      $rate->answer_id = $req->answer_id;
+      $rate->save();
+
+      return redirect()->back();
+
+    }
+
+    public function disrate(Request $req)
+    {
+      $rate = new Rate;
+      $rate->type = 0;
+      $rate->user_id = Auth::user()->id;
+      $rate->answer_id = $req->answer_id;
+      $rate->save();
+
+      return redirect()->back();
+    }
+
+    public function detach($id)
+    {
+      $detach = Rate::where('user_id', Auth::user()->id)->where('answer_id', $id)->first();
+      $detach->delete();
+
+      return redirect()->back();
+    }
+
+    public function attach($id)
+    {
+      $attach = Rate::where('user_id', Auth::user()->id)->where('answer_id', $id)->first();
+      $attach->delete();
+
+      return redirect()->back();
+    }
+
+    public function jawaban_terbaik($id)
+    {
+      $b = Answer::find($id);
+
+      $b->super = 1;
+      $b->save();
+
+      return redirect()->back();
+
+    }
+
+    public function hapus($id)
+    {
+      $b = Answer::find($id);
+
+      $b->super = 0;
+      $b->save();
+
+      return redirect()->back();
+    }
     /**
      * Display the specified resource.
      *

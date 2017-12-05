@@ -14,10 +14,21 @@
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::put('/hapus/{id}', 'AnswerController@hapus')->name('hapus');
+
+Route::put('/jawaban_terbaik/{id}', 'AnswerController@jawaban_terbaik')->name('jawaban_terbaik');
+
+Route::delete('/detach/{detach}', 'AnswerController@detach')->name('detach');
+
+Route::delete('/attach/{attach}', 'AnswerController@attach')->name('attach');
+
+Route::post('/rate', 'AnswerController@rate')->name('rate');
+
+Route::post('/disrate', 'AnswerController@disrate')->name('disrate');
 
 Auth::routes();
 
-Route::get('/q/{slug}', 'HomeController@q')->name('q');
+Route::get('/q/{slug}', 'HomeController@q')->name('q')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 

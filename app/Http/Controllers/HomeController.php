@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Question;
 use App\Answer;
 use File;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -22,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $index = Question::orderBy('id','desc')->paginate(7);
+        $index = Question::where('user_id', Auth::user()->id)->orderBy('id','desc')->paginate(7);
         return view('home', compact('index'));
     }
 
@@ -57,6 +58,7 @@ class HomeController extends Controller
     //   return redirect()->back();
     // }
 
+    
     public function up()
     {
       if (Auth::user()->rates()->type == null) {

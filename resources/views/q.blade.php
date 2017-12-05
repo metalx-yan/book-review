@@ -35,11 +35,50 @@
                     @foreach ($question->answers as $b)
                       <div class="col-md-10">
                         {{ $b->message }}
+                        @if ($b->super == true)
+                          <span class="glyphicon glyphicon-ok text-primary" style="font-size: 20px;"></span>
+                        @endif
                        </div>
 
                        <div class="col-md-12">
-                         <a href="#" class="glyphicon glyphicon-thumbs-up" style="text-decoration: none;"></a> |
-                         <a href="#" class="glyphicon glyphicon-thumbs-down" style="text-decoration: none;"></a>
+                         <form class="" action="{{ $b->rates()->where('type', true)->where('user_id', Auth::user()->id)->where('answer_id', $b->id)->count() > 0 ? route('attach', $b->id) : route('rate') }}" method="post">
+                           {{ csrf_field() }}
+                           {{ $b->rates()->where('type', true)->where('user_id', Auth::user()->id)->where('answer_id', $b->id)->count() > 0 ? method_field('DELETE') : null }}
+                           <button class="btn btn-link pull-right" name="button" type="submit">
+                             <span class="glyphicon glyphicon-thumbs-up {{ $b->rates()->where('type', true)->where('user_id', Auth::user()->id)->where('answer_id', $b->id)->count() > 0 ? "text-danger" : null }}" aria-hidden="true"></span>
+                             {{ $b->rates()->where('type', true)->get()->count() }}
+                           </button>
+                           <input type="hidden" name="answer_id" value="{{ $b->id }}">
+                         </form>
+
+                         <form class="" action="{{ $b->rates()->where('type', false)->where('user_id', Auth::user()->id)->where('answer_id', $b->id)->count() > 0 ? route('detach', $b->id) : route('disrate') }}" method="post">
+                           {{ csrf_field() }}
+                           {{ $b->rates()->where('type', false)->where('user_id', Auth::user()->id)->where('answer_id', $b->id)->count() > 0 ? method_field('DELETE') : null }}
+                           <button class="btn btn-link pull-right" name="button" type="submit">
+                             <span class="glyphicon glyphicon-thumbs-down {{ $b->rates()->where('type', false)->where('user_id', Auth::user()->id)->where('answer_id', $b->id)->count() > 0 ? "text-danger": null }}" aria-hidden="true"></span>
+                               {{ $b->rates()->where('type',  false)->get()->count()}}
+                           </button>
+                           <input type="hidden" name="answer_id" value="{{ $b->id }}">
+                         </form>
+
+                         @if ((Auth::user()->id == $question->id) && !$b->super)
+                           <form class="" action="{{ route('jawaban_terbaik', $b->id) }}" method="post">
+                             {{ csrf_field() }}
+                             {{ method_field('PUT') }}
+                             <button type="submit" class="btn btn-primary btn-xs" name="button">Jawaban Terbaik</button>
+                           </form>
+                         @elseif ((Auth::user()->id == $question->id) && $b->super)
+                           <form class="" action="{{ route('hapus', $b->id) }}" method="post">
+                             {{ csrf_field() }}
+                             {{ method_field('PUT') }}
+                              <button type="submit" name="button" class="btn btn-danger btn-xs">Hapus Jawaban Terbaik</button>
+                            </form>
+                         @endif
+
+
+                         <div class="col-md-10">
+                           <hr>
+                         </div>
                          @if ($b->user->id == Auth::user()->id)
                            <form class="" action="{{ route('answer.destroy', $b->id) }}" method="post">
                              {{ csrf_field() }}
@@ -49,7 +88,6 @@
                              </button>
                            </form>
                          @endif
-                         <hr>
                        </div>
                     @endforeach
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     protected $fillable = [
-      'type',
+      'type','id','answer_id','user_id'
     ];
 
     public function user()
