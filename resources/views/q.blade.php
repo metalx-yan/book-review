@@ -61,7 +61,7 @@
                            <input type="hidden" name="answer_id" value="{{ $b->id }}">
                          </form>
 
-                         @if ((Auth::user()->id == $question->id) && !$b->super)
+                         @if (((Auth::user()->id == $question->id) && !$b->super) && !($question->answers->where('super', true)->count() > 0) )
                            <form class="" action="{{ route('jawaban_terbaik', $b->id) }}" method="post">
                              {{ csrf_field() }}
                              {{ method_field('PUT') }}
