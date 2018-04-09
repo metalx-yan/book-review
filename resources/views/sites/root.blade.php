@@ -24,7 +24,7 @@
                 <h3><a href="{{ route('q', $roots->slug) }}" style="text-decoration:none;">{{ $roots->title }}</a></h3>
                 <small>{{ $roots->user->name." <".$roots->user->email.">"  }}</small>
                 <div class="thumbnail">
-                  <img src="{{asset('image/'.$roots->books->cover)}}" alt="{{ $roots->books->title }}">
+                  <img src="{{asset('image/' . $roots->books->cover)}}" alt="{{ $roots->books->title }}">
               </div>
             </div>
 

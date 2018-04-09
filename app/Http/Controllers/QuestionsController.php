@@ -44,7 +44,17 @@ class QuestionsController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+      // Untuk mengetahui apakan sudah diisi gambar
+      // $request->hasFile('image_upload')
+      // untuk mengetahui ektensi file
+      // $image = $request->file('image_upload');
+      // time() untuk menamai file
+      // lokasi gambar disimpan
+      // $location = public_path('image/' . $filename);
+      // Save gambar pada ditektori Image::make($image)->resize(300,300)->save($location);
+      // Hanya gambar
+
+        // dd($image->getClientOriginalExtension());
         $this->validate($request, [
           'title' => 'required',
           'description' => 'required',
@@ -72,12 +82,12 @@ class QuestionsController extends Controller
         $create->save();
 
         $ques = Question::where('slug', '=', $create->slug)->first();
-
-        if ($request->hasFile('image_upload')) {
+        //
+          if ($request->hasFile('image_upload')) {
           $image = $request->file('image_upload');
-          $filename = time() . '.' . $image->getClientOriginalExtension();
-          $location = public_path('image/' . $filename);
-          Image::make($image)->resize(300,300)->save($location);
+          $filename = time() . '.' . $image->getClientOriginalExtension(); // membuat nama
+          $location = public_path('image/' . $filename); //
+          Image::make($image)->save($location);
 
           $ques->books()->create([
           'title' => $request->titlebook,
@@ -86,9 +96,10 @@ class QuestionsController extends Controller
           'publisher' => $request->publisher,
           'cover' => $filename
           ]);
-        }
+
 
         return redirect()->route('question.index');
+      }
 
     }
 

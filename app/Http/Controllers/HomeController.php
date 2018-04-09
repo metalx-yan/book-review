@@ -58,7 +58,7 @@ class HomeController extends Controller
     //   return redirect()->back();
     // }
 
-    
+
     public function up()
     {
       if (Auth::user()->rates()->type == null) {
